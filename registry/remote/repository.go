@@ -1096,9 +1096,6 @@ func (s *manifestStore) Fetch(ctx context.Context, target ocispec.Descriptor) (r
 	if mediaType != target.MediaType {
 		return nil, fmt.Errorf("%s %q: mismatch response Content-Type %q: expect %q", resp.Request.Method, resp.Request.URL, mediaType, target.MediaType)
 	}
-	if size := resp.ContentLength; size != -1 && size != target.Size {
-		return nil, fmt.Errorf("%s %q: mismatch Content-Length", resp.Request.Method, resp.Request.URL)
-	}
 	if err := verifyContentDigest(resp, target.Digest); err != nil {
 		return nil, err
 	}
